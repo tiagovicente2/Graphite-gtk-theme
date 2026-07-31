@@ -8,6 +8,8 @@
     <file>assets/checkbox-off.svg</file>
     <file>assets/dash-placeholder.svg</file>
     <file>assets/noise-texture.svg</file>
+    <file alias="gnome-shell-start.svg">assets/gnome-shell-start.svg</file>
+    <file alias="workspace-placeholder.svg">assets/workspace-placeholder.svg</file>
     <file>assets/toggle-off.svg</file>
     <file>assets/toggle-off-dark.svg</file>
     <file>assets/toggle-on.svg</file>
@@ -40,6 +42,8 @@
     <file>scalable/status/screen-privacy-symbolic.svg</file>
     <file>scalable/status/stop-symbolic.svg</file>
     <file>gnome-shell.css</file>
+    <file alias="gnome-shell-dark.css">gnome-shell.css</file>
+    <file alias="gnome-shell-light.css">gnome-shell.css</file>
     <file alias="gdm.css">gnome-shell.css</file>
     <file alias="gdm3.css">gnome-shell.css</file>
     <file alias="Yaru/gnome-shell.css">gnome-shell.css</file>

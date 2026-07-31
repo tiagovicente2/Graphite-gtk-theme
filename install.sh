@@ -40,7 +40,9 @@ SIZE_VARIANTS=('' '-compact')
 if [[ "$(command -v gnome-shell)" ]]; then
   gnome-shell --version
   SHELL_VERSION="$(gnome-shell --version | cut -d ' ' -f 3 | cut -d . -f -1)"
-  if [[ "${SHELL_VERSION:-}" -ge "48" ]]; then
+  if [[ "${SHELL_VERSION:-}" -ge "50" ]]; then
+    GS_VERSION="50-0"
+  elif [[ "${SHELL_VERSION:-}" -ge "48" ]]; then
     GS_VERSION="48-0"
   elif [[ "${SHELL_VERSION:-}" -ge "47" ]]; then
     GS_VERSION="47-0"
@@ -57,7 +59,7 @@ if [[ "$(command -v gnome-shell)" ]]; then
   fi
 else
   echo "'gnome-shell' not found, using styles for last gnome-shell version available."
-  GS_VERSION="48-0"
+  GS_VERSION="50-0"
 fi
 
 #  Check command avalibility
@@ -169,6 +171,10 @@ install() {
   cp -r "${SRC_DIR}/assets/gnome-shell/common-assets"                                        "${THEME_DIR}/gnome-shell/assets"
   cp -r "${SRC_DIR}/assets/gnome-shell/assets${ELSE_DARK:-}/"*.svg                           "${THEME_DIR}/gnome-shell/assets"
   cp -r "${SRC_DIR}/assets/gnome-shell/theme${theme}${ctype}/"*.svg                          "${THEME_DIR}/gnome-shell/assets"
+
+  local shell_background="${SRC_DIR}/assets/gnome-shell/background${color}${ctype}.png"
+  [[ -f "${shell_background}" ]] || shell_background="${SRC_DIR}/assets/gnome-shell/background-Light${ctype}.png"
+  cp "${shell_background}"                                                                    "${THEME_DIR}/gnome-shell/background.png"
 
   cd "${THEME_DIR}/gnome-shell"
   ln -s assets/no-events.svg no-events.svg
@@ -461,7 +467,9 @@ install_gdm() {
   cp -r "${SRC_DIR}/assets/gnome-shell/assets${ELSE_DARK}/"*.svg                             "${THEME_TEMP}/gnome-shell/assets"
   cp -r "${SRC_DIR}/assets/gnome-shell/theme${theme}${ctype}/"*.svg                          "${THEME_TEMP}/gnome-shell/assets"
   cp -r "${SRC_DIR}/assets/gnome-shell/scalable"                                             "${THEME_TEMP}/gnome-shell"
-  cp -r "${SRC_DIR}/assets/gnome-shell/background${gcolor}${ctype}.png"                      "${THEME_TEMP}/gnome-shell/background.png"
+  local shell_background="${SRC_DIR}/assets/gnome-shell/background${gcolor}${ctype}.png"
+  [[ -f "${shell_background}" ]] || shell_background="${SRC_DIR}/assets/gnome-shell/background-Light${ctype}.png"
+  cp "${shell_background}"                                                                    "${THEME_TEMP}/gnome-shell/background.png"
   mv "${THEME_TEMP}/gnome-shell/assets/process-working.svg"                                  "${THEME_TEMP}/gnome-shell/process-working.svg"
 
   if check_exist "${COMMON_CSS_FILE}"; then # CSS-based theme

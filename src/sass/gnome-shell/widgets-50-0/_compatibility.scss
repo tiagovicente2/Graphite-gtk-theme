@@ -1,0 +1,136 @@
+/* GNOME 50 compatibility */
+
+// GNOME 50 switched scrollbar handles from actor IDs to style classes.
+StScrollBar {
+  > .vhandle,
+  > .hhandle {
+    border-radius: $circular_radius;
+    background-color: $text-secondary-disabled;
+    border: 4px solid transparent;
+
+    @if $colorful == 'true' {
+      &:hover { background-color: $text-secondary; }
+      &:active { background-color: $text; }
+    } @else {
+      &:hover { background-color: rgba($primary, 0.5); }
+      &:active { background-color: $primary; }
+    }
+  }
+}
+
+#overview StScrollBar {
+  > .vhandle,
+  > .hhandle {
+    background-color: on($osd, disabled);
+    &:hover { background-color: on($osd, secondary); }
+    &:active { background-color: on($osd); }
+  }
+}
+
+.popup-sub-menu StScrollBar {
+  > .vhandle,
+  > .hhandle {
+    background-color: on($primary, track);
+    &:hover { background-color: on($primary, disabled); }
+    &:active { background-color: on($primary, secondary); }
+  }
+}
+
+#unlockDialogNotifications {
+  > .vhandle,
+  > .hhandle {
+    background-color: transparentize($background, 0.7);
+    &:hover, &:focus { background-color: transparentize($background, 0.5); }
+    &:active { background-color: transparentize($primary, 0.5); }
+  }
+}
+
+// GNOME 50 uses message actors for lock-screen notifications.
+.unlock-dialog-notifications-container {
+  width: if($compact == 'true', 25.5em, 29em);
+
+  .message {
+    padding: 12px 6px;
+    border: none;
+    border-radius: $menu_radius;
+    background-color: $osd;
+    color: on($osd);
+
+    &.critical { background-color: lighten($osd, 8%); }
+    &:active { background-color: overlay($osd, hover); }
+
+    StButton {
+      @extend %osd_button;
+      background-color: transparent;
+      &:insensitive { background-color: transparent; opacity: 0.5; }
+    }
+
+    .message-header { color: on($osd); }
+  }
+}
+
+// Updated notification controls and search status layout.
+.message-list-controls .message-list-clear-button {
+  border-radius: $circular_radius;
+}
+
+.message .message-header .message-close-button {
+  padding: $base_padding;
+}
+
+.search-statusbox {
+  spacing: $base_padding * 4;
+}
+
+// Additional brightness sliders are placed inside the quick-settings submenu.
+.quick-toggle-menu .slider-bin {
+  padding: $base_padding;
+  border-radius: $circular_radius;
+  &:focus { @include button(focus); }
+}
+
+// GNOME 50 moved the GDM actions into a dedicated bottom button group.
+.login-dialog-bottom-button-group {
+  padding: 32px;
+  spacing: 16px;
+}
+
+.login-dialog,
+.unlock-dialog {
+  .a11y-button {
+    padding: 0;
+    border-radius: $circular_radius;
+    width: 32px;
+    height: 32px;
+    border: none;
+
+    StIcon { icon-size: 16px; }
+  }
+}
+
+.login-dialog .a11y-button { @extend %button; }
+.unlock-dialog .a11y-button { @extend %osd_button; }
+
+// Parental controls can block authentication with a dedicated GDM prompt.
+.parental-controls-shield {
+  spacing: 0.75em;
+
+  .parental-controls-shield-title {
+    margin-top: 0.6em;
+    @extend %title_4;
+    text-align: center;
+  }
+
+  .parental-controls-shield-description {
+    color: $text-secondary;
+    text-align: center;
+  }
+
+  .parental-controls-shield-button {
+    margin-top: 0.85em;
+    padding: $base_margin * 4 $base_margin * 11;
+    border-radius: $circular_radius;
+    @extend %button;
+    @extend %title_4;
+  }
+}
