@@ -253,7 +253,9 @@
 .quick-toggle-menu {
   border-radius: $base_radius !important;
   padding: $scaled_padding * 2;
-  margin: $base_padding * 2 12px + $base_padding * 3 0;
+  // GNOME 50 lays submenus out at the panel width; horizontal margins leave
+  // an unnecessary inset and prevent the open panel from filling that width.
+  margin: $base_padding * 2 0 0;
 
   &:insensitive {
     // override insensitive style on submenu
@@ -304,14 +306,22 @@
     } @else {
       color: $text-secondary !important;
 
+      // GNOME 50 no longer reliably inherits the menu item's foreground
+      // color into its labels, so set it explicitly for readable submenus.
+      StLabel { color: $text-secondary; }
+
       &:focus, &:hover, &.selected {
         color: $text !important;
         background-color: rgba($text, 0.1) !important;
+
+        StLabel { color: $text; }
       }
 
       &:active {
         color: $text !important;
         background-color: rgba($text, 0.2) !important;
+
+        StLabel { color: $text; }
       }
     }
 
