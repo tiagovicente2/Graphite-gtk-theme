@@ -3616,8 +3616,14 @@ decoration {
     }
   }
 
+  // Maximized Wayland clients (notably Electron apps) include the decoration
+  // shadow in their surface. Remove it to avoid transparent gaps and flicker.
   .maximized &,
-  .fullscreen &,
+  .fullscreen & {
+    border-radius: 0;
+    box-shadow: none;
+  }
+
   .tiled &,
   .tiled-top &,
   .tiled-right &,

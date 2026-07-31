@@ -76,6 +76,13 @@ window.background.chromium {
     box-shadow: $shadow-z16;
   }
 
+  // This app-specific shadow is declared after the generic maximized rule and
+  // otherwise overrides it, leaving Chromium/Electron Wayland windows inset.
+  &.maximized decoration,
+  &.fullscreen decoration {
+    box-shadow: none;
+  }
+
   // FIXME: There is no way to change the color of the toolbar buttons
   // toolbar button { color: $text-secondary; }
 
